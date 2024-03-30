@@ -1,13 +1,10 @@
 import torch
 from transformers import TrainingArguments, Trainer
-from sentence_transformers import CrossEncoder
 import tqdm
 import json
-import os
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
 import evaluate
 import numpy as np
-from torch.utils.data import Dataset
 import numpy as np
 import evaluate
 from datasets import load_dataset
@@ -62,7 +59,6 @@ device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cp
 model_name = "MoritzLaurer/mDeBERTa-v3-base-xnli-multilingual-nli-2mil7"
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 model = AutoModelForSequenceClassification.from_pretrained(model_name,num_labels=3,ignore_mismatched_sizes=True)
-# model = AutoModelForSequenceClassification.from_pretrained(model_name)
 
 device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
 model.to(device)
@@ -128,7 +124,6 @@ trainer.save_model("finetuned_model_final")
 
 cluste_list=[]
 submit=[]
-import tqdm
 with open ('path_to_test_set/test.model-aware.json', 'r') as f:
     test_aware = json.load(f)
 for i in tqdm.tqdm(range(len(test_aware))):
